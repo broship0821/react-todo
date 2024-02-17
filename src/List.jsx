@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import TodoHeader from "./components/TodoHeader";
 /**
  * 컴포넌트화 해보기
  * 다크모드 지원
@@ -8,7 +9,7 @@ import { useEffect, useState } from "react";
 export default function List() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
-  const [display, setDisplay] = useState("ALL");
+  const [display, setDisplay] = useState("all");
   const onChange = (e) => {
     setTodo(e.target.value);
   };
@@ -18,9 +19,6 @@ export default function List() {
   };
   const onDelete = (idx) => {
     setTodos((prev) => prev.filter((item, index) => index !== idx));
-  };
-  const onChangeRadio = (e) => {
-    setDisplay(e.target.value);
   };
   const onChangeCheckbox = (idx) => {
     setTodos((prev) =>
@@ -36,40 +34,12 @@ export default function List() {
   };
   return (
     <div>
-      <div>
-        <input
-          type="radio"
-          name="header"
-          id="all"
-          value="ALL"
-          onChange={onChangeRadio}
-          checked={display === "ALL"}
-        />
-        <label htmlFor="all">All</label>
-        <input
-          type="radio"
-          name="header"
-          id="active"
-          value="ACTIVE"
-          onChange={onChangeRadio}
-          checked={display === "ACTIVE"}
-        />
-        <label htmlFor="active">Active</label>
-        <input
-          type="radio"
-          name="header"
-          id="completed"
-          value="COMPLETED"
-          onChange={onChangeRadio}
-          checked={display === "COMPLETED"}
-        />
-        <label htmlFor="completed">Completed</label>
-      </div>
+      <TodoHeader display={display} setDisplay={setDisplay} />
       <ul>
-        {(display === "ALL"
+        {(display === "all"
           ? todos
           : todos.filter((item) =>
-              display === "COMPLETED" ? item.checked : !item.checked
+              display === "completed" ? item.checked : !item.checked
             )
         ).map((oneTodo, idx) => (
           <li key={idx} style={{ display: "flex" }}>
